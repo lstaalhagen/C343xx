@@ -1,0 +1,16 @@
+avahi-daemon.service
+avahi-daemon.socket
+cloud-config.service
+cloud-final.service
+cloud-init-local.service
+cloud-init.service
+cloud-init-hotplugd.socket 
+cups-browsed.service
+cups.service
+cups.socket
+ModemManager.service
+ufw.service
+unattended-upgrades.service
+wpa_supplicant.service
+apt-daily.timer
+apt-daily-upgrade.timer
