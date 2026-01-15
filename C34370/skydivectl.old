@@ -1,0 +1,26 @@
+#!/bin/bash
+
+CMD="/usr/local/bin/skydive allinone"
+
+if [ ! -z "$(ps ax|grep "${CMD}"|grep -v grep)" ]
+then
+  ISRUNNING="Y"
+  zenity --question --text="Stop Skydive?"
+  if [ "$?" = "0" ]
+  then
+    PID=$(ps ax|grep "${CMD}"|grep -v grep|grep -v sudo|awk '{print $1}')
+    if [ ! -z "${PID}" ]
+    then
+      # sudo -E kill -s SIGTERM ${PID}
+      kill -s SIGTERM ${PID}
+    fi
+  fi 
+else
+  ISRUNNING="N"
+  zenity --question --text="Start Skydive?"
+  if [ "$?" = "0" ]
+  then
+    echo "SKYDIVE_ETCD_DATA_DIR=/tmp SKYDIVE_ANALYZER_LISTEN=0.0.0.0:8082 /usr/local/bin/skydive allinone 1>/dev/null 2>&1" | at -M now 1>/dev/null 2>&1
+    zenity --info --text="Skydive is starting. Open http://localhost:8082 in browser."
+  fi
+fi

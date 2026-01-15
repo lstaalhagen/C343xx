@@ -1,0 +1,11 @@
+[Unit]
+Description=IperfServer
+After=multi-user.target
+
+[Service]
+Type=idle
+ExecStart=/usr/local/bin/iperfclient.sh
+
+[Install]
+WantedBy=multi-user.target
+
