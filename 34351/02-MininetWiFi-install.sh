@@ -15,6 +15,9 @@ cd mininet-wifi
 util/install.sh -Wlnfv
 rm -rf ${TMPDIR}
 
+# Fix mininet Deprecation warning
+sed -i 's/#!\/usr\/bin\/python3.*/#!\/usr\/bin\/python3 -W ignore::DeprecationWarning/g' /usr/local/bin/mn
+
 cd ${CURRDIR}
 mkdir -p /home/${REALUSER}/mininet-wifi
 cp Files/mininet-wifi/skeleton.py /home/${REALUSER}/mininet-wifi
