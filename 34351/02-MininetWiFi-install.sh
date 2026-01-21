@@ -12,7 +12,7 @@ TMPDIR=$(mktemp -d)
 cd ${TMPDIR}
 git clone https://github.com/lstaalhagen/mininet-wifi || { echo "Git clone failed - exiting" ; exit 1; }
 cd mininet-wifi
-util/install.sh -Wlnv
+util/install.sh -Wlnfv
 rm -rf ${TMPDIR}
 
 cd ${CURRDIR}
