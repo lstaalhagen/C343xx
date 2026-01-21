@@ -101,10 +101,5 @@ chown ${REALUSER}: ${HOMEDIR}/coap/*.sh
 
 # Add some stuff to root's .bashrc for namespace naming and library path for coap-programs
 if ! (grep -q -e "TAG:MQTTCOAPEXERCISE" /root/.bashrc) ; then
-  cat ../Files/root-bashrc-addition >> /root/.bashrc
+  cat Files/mqttcoap/root-bashrc-addition >> /root/.bashrc
 fi
-
-# Change default terminal settings
-[ -f ${HOMEDIR}/.config/xfce4/terminal/terminalrc ] && mv ${HOMEDIR}/.config/xfce4/terminal/terminalrc ${HOMEDIR}/.config/xfce4/terminal/terminalrc.sik
-cp ../Files/terminalrc ${HOMEDIR}/.config/xfce4/terminal/terminalrc
-chown ${REALUSER}: ${HOMEDIR}/.config/xfce4/terminal/terminalrc
