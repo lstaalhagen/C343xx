@@ -9,6 +9,8 @@ REALUSER=${SUDO_USER}
 [ -z "${REALUSER}" ] && echo "Environment variable $SUDO_USER not set as expected" && exit
 HOMEDIR=$(eval echo "~$REALUSER")
 
+CURRDIR=$(pwd)
+
 # Set WITHDOCS to "TRUE" if documentation for libcoap should be installed
 WITHDOCS="FALSE"
 if [ "${1}" = "--withdocs" ] ; then
@@ -63,9 +65,9 @@ systemctl mask mosquitto.service
 # mkdir -p /var/run/mosquitto
 # chmod mosquitto: /var/run/mosquitto
 #################################################################################################
-
+cd ${CURRDIR}
 sudo -u $REALUSER mkdir -p /home/${REALUSER}/mqtt
-cp broker.sh netgenerate.sh clearnet.sh /home/${REALUSER}/mqtt
+cp Files/mqttcoap/broker.sh Files/mqttcoap/netgenerate.sh Files/mqttcoap/clearnet.sh /home/${REALUSER}/mqtt
 chmod +x /home/${REALUSER}/mqtt/*.sh
 chown ${REALUSER}: /home/${REALUSER}/mqtt/*.sh
 
@@ -89,8 +91,9 @@ make install
 cd ..
 rm -rf libcoap
 
+cd ${CURRDIR}
 sudo -u $REALUSER mkdir -p /home/${REALUSER}/coap
-cp netgenerate.sh clearnet.sh /home/${REALUSER}/coap
+cp Files/mqttcoap/netgenerate.sh Files/mqttcoap/clearnet.sh /home/${REALUSER}/coap
 chmod +x /home/${REALUSER}/coap/*.sh
 chown ${REALUSER}: /home/${REALUSER}/coap/*.sh
 
