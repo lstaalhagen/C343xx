@@ -9,10 +9,6 @@ REALUSER=${SUDO_USER}
 [ -z "${REALUSER}" ] && echo "Environment variable $SUDO_USER not set as expected" && exit
 HOMEDIR=$(eval echo "~$REALUSER")
 
-# echo $HOMEDIR
-# echo $REALUSER
-# exit
-
 # Set WITHDOCS to "TRUE" if documentation for libcoap should be installed
 WITHDOCS="FALSE"
 if [ "${1}" = "--withdocs" ] ; then
