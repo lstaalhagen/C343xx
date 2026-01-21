@@ -26,6 +26,7 @@ apt-get clean
 if [ -s Files/disablelist ] ; then
   for p in $(cat Files/disablelist) ; do
     systemctl stop ${p}
+	systemctl disable ${p}
     systemctl mask ${p}
   done
 fi
