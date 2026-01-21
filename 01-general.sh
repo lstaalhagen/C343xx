@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 # Check for root
 [ $(id -u) -ne 0 ] && echo "Script must be executed with sudo" && exit 0
