@@ -1,11 +1,11 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
-if [ -z "${BASH}" ] ; then
-  echo "Error: Script must be exercuted with the Bash shell"
-  exit 1
-fi
+# Check for root
+[ $(id -u) -ne 0 ] && echo "Script must be executed with sudo" && exit 0
+REALUSER=${SUDO_USER}
+[ -z "${REALUSER}" ] && echo "Environment variable $SUDO_USER not set as expected" && exit
 
-source ./env
+# source ./env
 
 apt-get update
 apt-get -y upgrade
