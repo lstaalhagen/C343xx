@@ -13,7 +13,7 @@ apt-get -y autoremove
 apt-get -y install build-essential conntrack conntrackd xterm curl \
            net-tools ssh gcc-12 bridge-utils jq nmap at gnupg ca-certificates \
            openvswitch-common openvswitch-switch openvswitch-switch-dpdk openvswitch-doc python3-openvswitch \
-		   doxygen autoconf libtool libssl-dev htop
+		   doxygen autoconf libtool libssl-dev htop dos2unix
 		   
 DEBIAN_FRONTEND=noninteractive apt-get -yq install wireshark		   
 
