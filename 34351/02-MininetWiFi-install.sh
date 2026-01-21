@@ -1,11 +1,9 @@
 #!/usr/bin/env bash
 
-if [ -z "${BASH}" ] ; then
-  echo "Error: Script must be exercuted with the Bash shell"
-  exit 1
-fi
-
-source ../env
+# Check for root
+[ $(id -u) -ne 0 ] && echo "Script must be executed with sudo" && exit 0
+REALUSER=${SUDO_USER}
+[ -z "${REALUSER}" ] && echo "Environment variable $SUDO_USER not set as expected" && exit
 
 # Create a temporary installation directory and install Mininet-WiFi
 TMPDIR=$(mktemp -d)
@@ -15,6 +13,6 @@ cd mininet-wifi
 util/install.sh -Wlnv
 rm -rf ${TMPDIR}
 
-mkdir -p ${USERHOME}/mininet-wifi
-cp Files/mininet-wifi/skeleton.py ${USERHOME}/mininet-wifi
-chown -R ${REALUSER}: ${USERHOME}/mininet-wifi
+mkdir -p /home/${REALUSER}/mininet-wifi
+cp Files/mininet-wifi/skeleton.py /home/${REALUSER}/mininet-wifi
+chown -R ${REALUSER}: /home/${REALUSER}/mininet-wifi
