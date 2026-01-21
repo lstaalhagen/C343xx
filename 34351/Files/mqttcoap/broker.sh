@@ -3,11 +3,11 @@
 # Script to start or stop the Mosquitto MQTT Broker. (C) Copyright 2025, Lars Staalhagen
 
 # Check for terminal
-[ "$TERM" = "xterm" ] && echo "Please execute script in a normal terminal" && exit
+# [ "$TERM" = "xterm" ] && echo "Please execute script in a normal terminal" && exit
 
 # Check if broker already running
 ISRUNNING=N
-if [ ! -z "$(ps ax|grep mosquitto|grep -v grep)" ] ; then
+if ( pgrep mosquitto > /dev/null ) ; then
   ISRUNNING=Y
 fi
 
@@ -47,7 +47,12 @@ EndOfConfig
 
 if [ "${1}" = "start" ] ; then
   if [ "${ISRUNNING}" = "N" ] ; then
-    echo "mosquitto -c /tmp/mosquitto.conf" | at now 1>/dev/null 2>&1
+    NS=$(ip netns identify)
+	if [ -z "${NS}" ] ; then
+      echo "mosquitto -c /tmp/mosquitto.conf" | at now 1>/dev/null 2>&1
+	else
+	  echo "ip netns exec ${NS} mosquitto -c /tmp/mosquitto.conf" | at now 1>/dev/null 2>&1
+	fi 
   else
     echo "Already running"
   fi
