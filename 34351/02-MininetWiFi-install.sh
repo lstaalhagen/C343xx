@@ -5,6 +5,8 @@
 REALUSER=${SUDO_USER}
 [ -z "${REALUSER}" ] && echo "Environment variable $SUDO_USER not set as expected" && exit
 
+CURRDIR=$(pwd)
+
 # Create a temporary installation directory and install Mininet-WiFi
 TMPDIR=$(mktemp -d)
 cd ${TMPDIR}
@@ -13,6 +15,7 @@ cd mininet-wifi
 util/install.sh -Wlnv
 rm -rf ${TMPDIR}
 
+cd ${CURRDIR}
 mkdir -p /home/${REALUSER}/mininet-wifi
 cp Files/mininet-wifi/skeleton.py /home/${REALUSER}/mininet-wifi
 chown -R ${REALUSER}: /home/${REALUSER}/mininet-wifi
