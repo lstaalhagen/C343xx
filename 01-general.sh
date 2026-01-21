@@ -40,14 +40,14 @@ if [ -s $XRESOURCES ]; then
   grep -q -e "^xterm\*faceName:" $XRESOURCES
   if [ $? -ne 0 ]; then
     echo "xterm*faceName: Monospace" >> $XRESOURCES
-    echo "xterm*faceSize: 14" >> $XRESOURCES
+    echo "xterm*faceSize: 12" >> $XRESOURCES
   else
     sed -i 's/xterm\*faceName:.*/xterm\*faceName: Monospace/g' $XRESOURCES
-    sed -i 's/xterm\*faceSize:.*/xterm\*faceSize: 14/g' $XRESOURCES
+    sed -i 's/xterm\*faceSize:.*/xterm\*faceSize: 12/g' $XRESOURCES
   fi
 else
   echo "xterm*faceName: Monospace" > $XRESOURCES
-  echo "xterm*faceSize: 14" >> $XRESOURCES
+  echo "xterm*faceSize: 12" >> $XRESOURCES
 fi
 chown ${REALUSER}: $XRESOURCES
 sudo -u ${REALUSER} xrdb -merge $XRESOURCES
