@@ -64,10 +64,10 @@ systemctl mask mosquitto.service
 # chmod mosquitto: /var/run/mosquitto
 #################################################################################################
 
-sudo -u $REALUSER -D $HOMEDIR mkdir -p mqtt
-cp broker.sh netgenerate.sh clearnet.sh ${HOMEDIR}/mqtt
-chmod +x ${HOMEDIR}/mqtt/*.sh
-chown ${REALUSER}: ${HOMEDIR}/mqtt/*.sh
+sudo -u $REALUSER mkdir -p /home/${REALUSER}/mqtt
+cp broker.sh netgenerate.sh clearnet.sh /home/${REALUSER}/mqtt
+chmod +x /home/${REALUSER}/mqtt/*.sh
+chown ${REALUSER}: /home/${REALUSER}/mqtt/*.sh
 
 
 ####
@@ -89,10 +89,10 @@ make install
 cd ..
 rm -rf libcoap
 
-sudo -u $REALUSER -D $HOMEDIR mkdir -p coap
-cp netgenerate.sh clearnet.sh ${HOMEDIR}/coap
-chmod +x ${HOMEDIR}/coap/*.sh
-chown ${REALUSER}: ${HOMEDIR}/coap/*.sh
+sudo -u $REALUSER mkdir -p /home/${REALUSER}/coap
+cp netgenerate.sh clearnet.sh /home/${REALUSER}/coap
+chmod +x /home/${REALUSER}/coap/*.sh
+chown ${REALUSER}: /home/${REALUSER}/coap/*.sh
 
 
 ####
