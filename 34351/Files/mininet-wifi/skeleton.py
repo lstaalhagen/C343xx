@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# *** DON'T CHANGE THE NEXT FIVE LINES
+# *** DON'T CHANGE THE NEXT EIGHT LINES UNLESS EXPLICITLY INSTRUCTED TO
 import sys
 from mininet.node import Controller
 from mininet.log import setLogLevel, info
