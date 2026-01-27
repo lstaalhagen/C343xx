@@ -33,9 +33,9 @@ fi
 apt-get remove -y unattended-upgrades
 
 # Fix Grub
-sed -i 's/GRUB_TIMEOUT_STYLE=.*/GRUB_TIMEOUT_STYLE=menu/g' /etc/default/grub
-sed -i 's/GRUB_TIMEOUT=.*/GRUB_TIMEOUT=2/g' /etc/default/grub
-update-grub
+# sed -i 's/GRUB_TIMEOUT_STYLE=.*/GRUB_TIMEOUT_STYLE=menu/g' /etc/default/grub
+# sed -i 's/GRUB_TIMEOUT=.*/GRUB_TIMEOUT=2/g' /etc/default/grub
+# update-grub
 
 # Hack to get a better default font size in Xterm windows
 XRESOURCES=/home/${REALUSER}/.Xresources
