@@ -6,15 +6,47 @@ REALUSER=${SUDO_USER}
 [ -z "${REALUSER}" ] && echo "Environment variable $SUDO_USER not set as expected" && exit
 HOMEDIR=$(eval echo "~$REALUSER")
 
-# Install skydive tool
+INTERACTIVE="NO"
+if [ "${1}" = "-i" ] ; then
+  INTERACTIVE="YES"
+fi
+
+apt update
+
+#
+# Skydive tool
+#
+###############################################################################
+if [ "${INTERACTIVE}" = "YES" ] ; then
+  echo "Skydive: "
+  read -n 1 key
+fi
 curl -Lo - https://github.com/skydive-project/skydive-binaries/raw/jenkins-builds/skydive-latest.gz | gzip -d > skydive && chmod +x skydive && sudo mv skydive /usr/local/bin/
 install -m 0755 skydivectl /usr/local/bin/skydivectl
+###############################################################################
 
-# Get and install mininet - not working at the moment
+#
+# mininet
+#
+###############################################################################
 # git clone https://github.com/mininet/mininet
 # mininet/util/install.sh
+if [ "${INTERACTIVE}" = "YES" ] ; then
+  echo "Mininet: "
+  read -n 1 key
+fi
+apt install mininet
+###############################################################################
 
+#
+# Docker
+#
+###############################################################################
 # for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do sudo apt-get remove $pkg; done
+if [ "${INTERACTIVE}" = "YES" ] ; then
+  echo "Docker: "
+  read -n 1 key
+fi
 apt-get install -y ca-certificates curl gnupg
 
 install -m 0755 -d /etc/apt/keyrings
@@ -28,10 +60,18 @@ echo \
   $(. /etc/os-release && echo "$UBUNTU_CODENAME") stable" | \
   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
   
-apt-get update
 apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+###############################################################################
 
+#
 #  Minikube
+#
+###############################################################################
+if [ "${INTERACTIVE}" = "YES" ] ; then
+  echo "Minikube: "
+  read -n 1 key
+fi
+
 curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb
 dpkg -i minikube_latest_amd64.deb
 rm -f minikube_latest_amd64.deb
@@ -75,9 +115,17 @@ else
    echo "fs.protected_regular=0" >> $SYSCTLCNF
 fi
 sysctl -p
-
 # echo "Please run 'sudo minikube start --driver=none' at least once before distributing the VM"
+###############################################################################
 
+#
+# Ansible
+#
+###############################################################################
+if [ "${INTERACTIVE}" = "YES" ] ; then
+  echo "Ansible: "
+  read -n 1 key
+fi
 apt-add-repository -y ppa:ansible/ansible
 apt-get update
 apt-get install -y ansible
@@ -86,6 +134,7 @@ if [ -f Playbooks/playbooks.zip ] ; then
   # Fix path
   sudo -u ${REALUSER} unzip -d /home/${REALUSER}/Playbooks Playbooks/playbooks.zip
 fi  
+###############################################################################
 
 # Clean up for apt
 apt-get clean
