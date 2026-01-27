@@ -2,7 +2,7 @@
 Repository for setting up virtual machines for courses 34351 and 34370.
 
 ## Prerequisite
-A running VM running Xubuntu 24.04-4 LTS. Other distros may be applicable but may require modifications to scripts, etc.
+The scripts were used/tested on a Xubuntu 24.04.3 VM. Other distros may be applicable but may require modifications to scripts, etc.
 
 ## Instructions
 1. Start terminal
