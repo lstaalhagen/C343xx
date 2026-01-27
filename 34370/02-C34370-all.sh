@@ -6,9 +6,9 @@ REALUSER=${SUDO_USER}
 [ -z "${REALUSER}" ] && echo "Environment variable $SUDO_USER not set as expected" && exit
 HOMEDIR=$(eval echo "~$REALUSER")
 
-INTERACTIVE="NO"
-if [ "${1}" = "-i" ] ; then
-  INTERACTIVE="YES"
+NONINTERACTIVE="NO"
+if [ "${1}" = "-q" ] ; then
+  NONINTERACTIVE="YES"
 fi
 
 apt update
@@ -17,9 +17,10 @@ apt update
 # Skydive tool
 #
 ###############################################################################
-if [ "${INTERACTIVE}" = "YES" ] ; then
-  echo "Skydive: "
-  read -n 1 key
+if [ "${NONINTERACTIVE}" = "NO" ] ; then
+  echo "Install Skydive: "
+  read -n 1 KEY
+  if [ "${KEY}"
 fi
 curl -Lo - https://github.com/skydive-project/skydive-binaries/raw/jenkins-builds/skydive-latest.gz | gzip -d > skydive && chmod +x skydive && sudo mv skydive /usr/local/bin/
 install -m 0755 skydivectl /usr/local/bin/skydivectl
