@@ -17,13 +17,18 @@ apt update
 # Skydive tool
 #
 ###############################################################################
+INST="NO"
 if [ "${NONINTERACTIVE}" = "NO" ] ; then
   echo "Install Skydive: "
   read -n 1 KEY
-  if [ "${KEY}"
+  if [ "${KEY}" = "y" ] || [ "${KEY}" = "Y" ] ; then
+    INST="YES"
+  fi
 fi
-curl -Lo - https://github.com/skydive-project/skydive-binaries/raw/jenkins-builds/skydive-latest.gz | gzip -d > skydive && chmod +x skydive && sudo mv skydive /usr/local/bin/
-install -m 0755 skydivectl /usr/local/bin/skydivectl
+if [ "${NONINTERACTIVE}" = "YES" ] || [ "${INST}" = "YES" ] ; then
+  curl -Lo - https://github.com/skydive-project/skydive-binaries/raw/jenkins-builds/skydive-latest.gz | gzip -d > skydive && chmod +x skydive && sudo mv skydive /usr/local/bin/
+  install -m 0755 skydivectl /usr/local/bin/skydivectl  
+fi
 ###############################################################################
 
 #
@@ -32,38 +37,52 @@ install -m 0755 skydivectl /usr/local/bin/skydivectl
 ###############################################################################
 # git clone https://github.com/mininet/mininet
 # mininet/util/install.sh
-if [ "${INTERACTIVE}" = "YES" ] ; then
-  echo "Mininet: "
-  read -n 1 key
+INST="NO"
+if [ "${NONINTERACTIVE}" = "NO" ] ; then
+  echo "Install mininet: "
+  read -n 1 KEY
+  if [ "${KEY}" = "y" ] || [ "${KEY}" = "Y" ] ; then
+    INST="YES"
+  fi
 fi
-apt install mininet
-###############################################################################
+if [ "${NONINTERACTIVE}" = "YES" ] || [ "${INST}" = "YES" ] ; then
+  apt install mininet
+fi
+#############################################################################
 
 #
 # Docker
 #
 ###############################################################################
-# for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do sudo apt-get remove $pkg; done
-if [ "${INTERACTIVE}" = "YES" ] ; then
-  echo "Docker: "
-  read -n 1 key
+INST="NO"
+if [ "${NONINTERACTIVE}" = "NO" ] ; then
+  echo "Install Docker: "
+  read -n 1 KEY
+  if [ "${KEY}" = "y" ] || [ "${KEY}" = "Y" ] ; then
+    INST="YES"
+  fi
 fi
-apt-get install -y ca-certificates curl gnupg
-install -m 0755 -d /etc/apt/keyrings
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
-chmod a+r /etc/apt/keyrings/docker.asc
+if [ "${NONINTERACTIVE}" = "YES" ] || [ "${INST}" = "YES" ] ; then
+  for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc ; do 
+    apt-get remove $pkg
+  done
+  apt-get install -y ca-certificates curl gnupg
+  install -m 0755 -d /etc/apt/keyrings
+  curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+  chmod a+r /etc/apt/keyrings/docker.asc
 
-# Change $UBUNTU_CODENAME to $VERSION_CODENAME if a real Ubuntu distribution is used
-sudo tee /etc/apt/sources.list.d/docker.sources <<EOF
+  # Change $UBUNTU_CODENAME to $VERSION_CODENAME if a real Ubuntu distribution is used
+  sudo tee /etc/apt/sources.list.d/docker.sources <<EOF
 Types: deb
 URIs: https://download.docker.com/linux/ubuntu
 Suites: $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}")
 Components: stable
 Signed-By: /etc/apt/keyrings/docker.asc
 EOF
-apt update
+  apt update
   
-apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+  apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+fi
 ###############################################################################
 
 #
