@@ -44,13 +44,19 @@ if [ -s $XRESOURCES ]; then
   if [ $? -ne 0 ]; then
     echo "xterm*faceName: Monospace" >> $XRESOURCES
     echo "xterm*faceSize: 12" >> $XRESOURCES
+	echo "xterm*Foreground: black" >> $XRESOURCES
+	echo "xterm*Background: white" >> $XRESOURCES
   else
     sed -i 's/xterm\*faceName:.*/xterm\*faceName: Monospace/g' $XRESOURCES
     sed -i 's/xterm\*faceSize:.*/xterm\*faceSize: 12/g' $XRESOURCES
+	sed -i 's/xterm\*Foreground:.*/xterm\*Foreground: black/g' $XRESOURCES
+	sed -i 's/xterm\*Background:.*/xterm\*Background: white/g' $XRESOURCES
   fi
 else
   echo "xterm*faceName: Monospace" > $XRESOURCES
   echo "xterm*faceSize: 12" >> $XRESOURCES
+  echo "xterm*Foreground: black" >> $XRESOURCES
+  echo "xterm*Background: white" >> $XRESOURCES
 fi
 chown ${REALUSER}: $XRESOURCES
 sudo -u ${REALUSER} xrdb -merge $XRESOURCES
